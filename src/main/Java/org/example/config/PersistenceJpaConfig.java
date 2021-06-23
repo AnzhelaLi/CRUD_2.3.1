@@ -25,8 +25,13 @@ import java.util.Properties;
 @ComponentScan("org.example")
 public class PersistenceJpaConfig {
 
-    @Autowired
+
     private Environment env;
+
+    @Autowired
+    public PersistenceJpaConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

@@ -1,10 +1,11 @@
-package org.example.DAO;
+package org.example.dao;
 
 import org.example.model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -26,17 +27,11 @@ public class UserDaoImpl implements UserDao {
         entityManager.clear();
 
     }
-
+    @Transactional
     @Override
     public User updateUser(Long id, User updatedUser) {
-        User userToBeUpdated = findUserById(id);
-        userToBeUpdated.setName(updatedUser.getName());
-        userToBeUpdated.setSurname(updatedUser.getSurname());
-        userToBeUpdated.setWorkplace(updatedUser.getWorkplace());
-        userToBeUpdated.setAge(updatedUser.getAge());
-        userToBeUpdated.setSalary(updatedUser.getSalary());
-        entityManager.merge(userToBeUpdated);
-        return userToBeUpdated;
+        entityManager.merge(updatedUser);
+        return updatedUser;
     }
 
     @Override
